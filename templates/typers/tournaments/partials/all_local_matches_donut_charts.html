@@ -1,0 +1,10 @@
+{% load i18n %}
+{% if local_matches_charts %}
+   <p>{% trans "Statistics of your friends" %}</p>
+  {% for lm in local_matches_charts %}
+    <div class="donut-chart chart">
+      <canvas id="chartjs-{{ lm.id }}"
+              style="height: 330px; width: 230px;"></canvas>
+    </div>
+  {% endfor %}
+{% endif %}

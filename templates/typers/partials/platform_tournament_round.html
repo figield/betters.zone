@@ -1,0 +1,73 @@
+{% load i18n %}
+{% if r_tournament_name %}
+  <div class="platform-section">
+
+    <h1>{{ r_tournament_name }}, {% trans "round" %}: {{ r_round }}</h1>
+    <div class="platform-chart">
+
+      <div class="second-place place">
+        <span class="name">{% if 2 in r_results %}{{ r_results.2.winners }}{% endif %}</span>
+        <div class="winner"></div>
+        <div class="platform">
+          <span class="place-number">2</span>
+        </div>
+        <span class="value">{% if 2 in r_results %}{{ r_results.2.points }}{% endif %}</span>
+      </div>
+
+      <div class="first-place place">
+        <span class="name">{% if 1 in r_results %}{{ r_results.1.winners }}{% endif %}</span>
+        <div class="winner"></div>
+        <div class="platform">
+          <span class="place-number">1</span>
+        </div>
+        <span class="value">{% if 1 in r_results %}{{ r_results.1.points }}{% endif %}</span>
+      </div>
+
+      <div class="third-place place">
+        <span class="name">{% if 3 in r_results %}{{ r_results.3.winners }}{% endif %}</span>
+        <div class="winner"></div>
+        <div class="platform">
+          <span class="place-number">3</span>
+        </div>
+        <span class="value">{% if 3 in r_results %}{{ r_results.3.points }}{% endif %}</span>
+      </div>
+
+    </div>
+  </div>
+{% endif %}
+
+{% if t_tournament_name %}
+  <div class="platform-section">
+    <h1>{{ t_tournament_name }}</h1>
+    <div class="platform-chart">
+
+      <div class="second-place place">
+        <span class="name">{% if 2 in t_results %}{{ t_results.2.winners }}{% endif %}</span>
+        <div class="winner"></div>
+        <div class="platform">
+          <span class="place-number">2</span>
+        </div>
+        <span class="value">{% if 2 in t_results %}{{ t_results.2.points }}{% endif %}</span>
+      </div>
+
+      <div class="first-place place">
+        <span class="name">{% if 1 in t_results %}{{ t_results.1.winners }}{% endif %}</span>
+        <div class="winner"></div>
+        <div class="platform">
+          <span class="place-number">1</span>
+        </div>
+        <span class="value">{% if 1 in t_results %}{{ t_results.1.points }}{% endif %}</span>
+      </div>
+
+      <div class="third-place place">
+        <span class="name">{% if 3 in t_results %}{{ t_results.3.winners }}{% endif %}</span>
+        <div class="winner"></div>
+        <div class="platform">
+          <span class="place-number">3</span>
+        </div>
+        <span class="value">{% if 3 in t_results %}{{ t_results.3.points }}{% endif %}</span>
+      </div>
+
+    </div>
+  </div>
+{% endif %}

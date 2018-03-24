@@ -1,0 +1,88 @@
+{% extends "typers/tournaments/base_tournaments.html" %}
+{% load i18n %}
+
+{% block tournament_content %}
+  {% if matches %}
+    <div class="matches-section match-create-section matches-view-card">
+      <h1>{{ round.tournament }} - round {{ round.name }}</h1>
+      <a class="button-close" href="{% url 'tournaments' %}"><i class="fa fa-close"></i></a>
+
+      <form class="form" action="{% url 'save_matches_results' round_id=round.id %}" method="post">
+        {% csrf_token %}
+        <table>
+          <thead>
+          <tr>
+            <th>{% trans "No." %}</th>
+            <th></th>
+            <th>{% trans "Team 1" %}</th>
+            <th>{% trans "Result 1" %}</th>
+            <th>{% trans "Result 2" %}</th>
+            <th></th>
+            <th>{% trans "Team 2" %}</th>
+            <th>{% trans "Start date" %}</th>
+            <th></th>
+            <th>{% trans "Status" %}</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for m in matches %}
+            <tr>
+              <td>
+                {{ forloop.counter }}.
+              </td>
+              <td class="team-icon"><span class="fa fa-group"></span></td>
+              <td>
+                {{ m.team1 }}
+              </td>
+              <td>
+                <input class="short-input" name="result1-{{ m.id }}"
+                       placeholder="?"
+                    {% if m.result1 != None and m.result1 != -1 %}
+                       value="{{ m.result1 }}"
+                    {% endif %} >
+              </td>
+              <td>
+                <input class="short-input" name="result2-{{ m.id }}"
+                       placeholder="?"
+                    {% if m.result2 != None and m.result2 != -1 %}
+                       value="{{ m.result2 }}"
+                    {% endif %} >
+              </td>
+              <td class="team-icon"><span class="fa fa-group"></span></td>
+              <td>
+                {{ m.team2 }}
+              </td>
+              <td>
+                {{ m.start_date | date:"H:i d/m/Y" }}
+              </td>
+              <td class="info">
+                {% if m.info %}
+                  <i class="information fa fa-question-circle" data-info="{{ m.info }}"></i>
+                {% endif %}
+              </td>
+              <td class="status">
+                {% if m.warning == 'Closed' %}
+                  <i class="fa fa-lock"></i>
+                {% elif m.warning == 'Open' %}
+                  <i class="fa fa-unlock"></i>
+                {% endif %}
+                {% if m.warning_info %}
+                  <i class="warning fa fa-exclamation-triangle"
+                     data-info="{{ m.warning_info }}"></i>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        <button type="submit" class="button-yellow">{% trans "Save results" %}</button>
+      </form>
+    </div>
+  {% endif %}
+  <span id="tooltip" class="tooltip"></span>
+
+  <div class="charts-section donuts-section">
+    {% include "typers/tournaments/partials/all_global_matches_donut_charts.html" %}
+  </div>
+
+{% endblock %}

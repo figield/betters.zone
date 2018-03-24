@@ -1,0 +1,89 @@
+{% extends "typers/tournaments/base_tournaments.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block tournament_content %}
+  {% if matches %}
+    <div class="matches-section">
+      <h1>{{ round.tournament }} - round {{ round.name }}</h1>
+      <table>
+        <thead>
+        <tr>
+          <th>{% trans "No." %}</th>
+          <th></th>
+          <th>{% trans "Team 1" %}</th>
+          <th>{% trans "Result 1" %}</th>
+          <th>{% trans "Result 2" %}</th>
+          <th></th>
+          <th>{% trans "Team 2" %}</th>
+          <th>{% trans "Start date" %}</th>
+          <th></th>
+          <th>{% trans "Status" %}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <span id="tooltip" class="tooltip"></span>
+        {% for m in matches %}
+          <tr>
+            <td>
+              {{ forloop.counter }}.
+            </td>
+            <td class="team-icon"><span class="fa fa-group"></span></td>
+            <td>
+              {{ m.team1 }}
+            </td>
+            <td>
+
+              {% if m.result1 != None and m.result1 != -1 %}
+                {{ m.result1 }}
+              {% else %}
+                ?
+              {% endif %}
+            </td>
+            <td>
+              {% if m.result2 != None and m.result2 != -1 %}
+                {{ m.result2 }}
+              {% else %}
+                ?
+              {% endif %}
+            </td>
+            <td class="team-icon"><span class="fa fa-group"></span></td>
+            <td>
+              {{ m.team2 }}
+            </td>
+            <td>
+              {{ m.start_date | date:"H:i d/m/Y" }}
+            </td>
+            <td class="info">
+              {% if m.info %}
+                <i class="information fa fa-question-circle" data-info="{{ m.info }}"></i>
+              {% endif %}
+            </td>
+            <td class="status">
+              {% if m.warning == 'Closed' %}
+                <i class="fa fa-lock"></i>
+              {% elif m.warning == 'Open' %}
+                <i class="fa fa-unlock"></i>
+              {% endif %}
+              {% if m.warning_info %}
+                <i class="warning fa fa-exclamation-triangle"
+                   data-info="{{ m.warning_info }}"></i>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
+
+  <div class="charts-section donuts-section">
+    {% include "typers/tournaments/partials/all_global_matches_donut_charts.html" %}
+  </div>
+
+  <div class="charts-section donuts-section">
+    {% include "typers/tournaments/partials/all_local_matches_donut_charts.html" %}
+  </div>
+
+{% endblock %}
+

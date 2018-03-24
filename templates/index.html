@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% load static %}
+  <main>
+    <div class="gallery autoplay items-5">
+      {% include "typers/partials/index_gallery.html" %}
+    </div>
+
+    <div class="news-section">
+      <div id="content-slider" class="content-slider"></div>
+    </div>
+
+    <div class="news-section">
+        <div class="ads-block-horizontal">
+            <div class="ads-horizontal banner-1"></div>
+        </div>
+    </div>
+
+    <div class="news-section">
+      {% include "typers/partials/open_tournaments.html" %}
+    </div>
+
+    <div class="charts-section">
+      {% include "typers/partials/platform_tournament_round.html" %}
+    </div>
+
+    <div class="charts-section donuts-section">
+      {% include "typers/partials/matches_donut_charts.html" %}
+    </div>
+
+    <div class="news-section">
+        <div class="ads-block-horizontal">
+            <div class="ads-horizontal banner-2"></div>
+        </div>
+    </div>
+
+    <div id="rss-feeds" class="article-section"></div>
+
+    <div class="news-section">
+        <div class="ads-block-horizontal">
+            <div class="ads-horizontal banner-3"></div>
+        </div>
+    </div>
+
+{#    <div class="charts-section">#}
+{#      {% include "typers/rankings/partials/current_round_box.html" %}#}
+{#      {% include "typers/rankings/partials/current_round_box.html" %}#}
+{#    </div>#}
+
+  </main>
+{% endblock %}
+
+{% block javascript %}
+  <script src="{% static 'js/libs/jquery.rss.min.js' %}"></script>
+  <script src="{% static 'js/rss_feeds.js' %}"></script>
+  {% if matches_charts %}
+    <script src="{% static 'js/libs/Chart.min.js' %}"></script>
+    <script src="{% static 'js/libs/Chart.PieceLabel.min.js' %}"></script>
+    <script src="{% static 'js/charts/match_chartjs_org.js' %}"></script>
+    <script>
+        $(document).ready(function (e) {
+            matches_donut_chartsjs({{ matches_charts | safe }});
+        });
+    </script>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,245 @@
+$desktop-menu: 841px;
+$wide-screen-menu: 1199px;
+$wide-screen-menu-plus-one: 1200px;
+
+// mixin for repetitive styles
+
+@mixin menuLinksBox() {
+  background-color: rgba(0, 0, 0, .8);
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 5px 10px;
+  position: fixed;
+  right: 0;
+  text-align: left;
+  top: 50px;
+  width: 100%;
+  @media screen and (min-width: $desktop-menu) {
+    background-color: transparent;
+    left: initial;
+    margin: 10px;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    top: 0;
+    width: calc(100% - 200px);
+  }
+}
+
+@mixin menuLinksStyle() {
+  a {
+    color: $main-yellow;
+    display: block;
+    padding: 10px 5px;
+    font-size: 1.5em;
+    @media screen and (min-width: $desktop-menu) {
+      display: inline;
+      font-size: .8em;
+    }
+    i {
+      padding: 0 10px;
+      @media screen and (min-width: $desktop-menu) {
+        padding: 0;
+        margin: 0 5px;
+      }
+    }
+  }
+}
+
+// Menu container and simple elements style
+
+.main-nav {
+  clear: both;
+  background-color: rgba(0, 0, 0, 0.8);
+  height: 50px;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+  @media screen and (min-width: $desktop-menu) {
+    height: 90px;
+  }
+  i {
+    color: $main-yellow;
+    transition: none;
+  }
+  a{
+    color: $main-yellow;
+    text-decoration: none;
+    text-transform: capitalize;
+  }
+  .logo {
+    // background-size: cover;
+    // background-repeat: no-repeat;
+    // background-image: url(../assets/img/logo_short.svg);
+    box-sizing: border-box;
+    border: 2px solid #f7b63e;
+    border-radius: 6px;
+    color: #f7b63e;
+    display: block;
+    float: none;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    height: 40px;
+    left: 50%;
+    line-height: 34px;
+    margin: 5px 10px;
+    margin-left: -30px;
+    position: absolute;
+    top: 0;
+    text-align: center;
+    text-transform: uppercase;
+    width: 50px;
+    @media screen and (min-width: $desktop-menu) {
+      float: left;
+      font-size: 60px;
+      height: 70px;
+      line-height: 64px;
+      margin: 10px 5px;
+      position: static;
+      width: 90px;
+    }
+    .logo-half {
+      background-color: #f7b63e;
+      color: black;
+      display: inline-block;
+      height: 32px;
+      margin: 2px 0;
+      text-align: left;
+      width: 19px;
+      @media screen and (min-width: $desktop-menu) {
+        height: 62px;
+        width: 39px;
+      }
+    }
+  }
+  .logo_full {
+    // background-size: cover;
+    // background-repeat: no-repeat;
+    // background-image: url(../assets/img/logo_full.svg);
+    color: #f7b63e;
+    display: none;
+    float: left;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-weight: 300;
+    margin: 10px;
+    position: static;
+    word-spacing: -8px;
+    @media screen and (min-width: $desktop-menu) and (max-width: $wide-screen-menu) {
+      display: block;
+      font-size: 40px;
+      height: 70px;
+      letter-spacing: -2px;
+      line-height: 70px;
+      margin: 10px 5px;
+    }
+    @media screen and (min-width: $wide-screen-menu-plus-one) {
+      display: block;
+      font-size: 50px;
+      height: 70px;
+      letter-spacing: -4px;
+      line-height: 70px;
+      // width: 155px;
+    }
+    .logo-highlight {
+      // background-color: #f7b63e;
+      // border-radius: 6px;
+      // color: black;
+      // display: inline-block;
+      font-weight: 900;
+      // letter-spacing: -4px;
+      // padding: 0 5px;
+    }
+  }
+}
+
+// mobile-menu container style
+
+.mobile-menu {
+  display: block;
+  @media screen and (min-width: $desktop-menu) {
+    display: none;
+  }
+  .mobile-login {
+    float: left;
+  }
+  .x {
+    float: right;
+  }
+  input[type="checkbox"] {
+    display: none;
+  }
+  label {
+    display: block;
+    position: relative;
+    span {
+      font-size: 2rem;
+      color: $main-yellow;
+      padding: 10px;
+    }
+  }
+}
+
+// login container
+
+.main-login-form {
+  .login-form-box{
+    @include menuLinksBox();
+    @include menuLinksStyle();
+  }
+}
+
+// links container
+
+.main-nav-links {
+  .nav-box {
+    @include menuLinksBox();
+    @media screen and (min-width: $desktop-menu) {
+      top: 40px;
+    }
+    @include menuLinksStyle();
+    a {
+      padding: 10px 2px;
+      @media screen and (min-width: $desktop-menu) and (max-width: $wide-screen-menu) {
+        font-size: 1em;
+      }
+      @media screen and (min-width: $wide-screen-menu-plus-one) {
+        font-size: 1.4em;
+        padding: 0 7px;
+      }
+    }
+    .nav-link-home {
+      display: block;
+      visibility: visible;
+      @media screen and (min-width: $desktop-menu) {
+        display: none;
+        visibility: hidden;
+      }
+    }
+  }
+}
+
+// additional classes
+
+.mobile-hidden {
+  display: none;
+  visibility: hidden;
+  @media screen and (min-width: $desktop-menu) {
+    display: block;
+    visibility: visible;
+  }
+}
+
+.main-nav-links{
+  a.active-link-main-menu {
+    color: #8c8c8c;
+    i {
+      color: #8c8c8c;
+    }
+  }
+}

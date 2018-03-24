@@ -1,0 +1,46 @@
+{% load i18n %}
+{% load static %}
+<div class="sidebar">
+  <div id="teams-list">
+    {% for league, teams in league_teams %}
+
+      {% if league == 'default' %}
+        <div class="league-row">
+          <span>{% trans "No leagues" %}</span>
+          <i class="fa fa-chevron-down"></i>
+        </div>
+      {% else %}
+        <div class="league-row">
+          <span>{{ league }}</span>
+          <i class="fa fa-chevron-down"></i>
+        </div>
+      {% endif %}
+
+      <div class="teams-list">
+        {% for t in teams %}
+          <div class="team-row">
+            <div class="buttons-group tournament-buttons">
+              <a class="button-yellow" title="Edit team"
+                 href="#">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+              </a>
+              <a class="button-yellow"
+                 title="Remove Team"
+                 href="#">
+                <i class="fa fa-trash"></i>
+              </a>
+            </div>
+
+            <h1>{{ t.name }}</h1>
+            {% if t.photo and t.photo.file and t.photo.file.url %}
+                <img src="{{ t.photo.file.url }}" alt="{{ t.photo.title }}">
+            {% else %}
+{#              TODO: move to css #}
+                <img src="{% static "assets/img/default-team-logo-500.png" %}" alt="default logo">
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+</div>

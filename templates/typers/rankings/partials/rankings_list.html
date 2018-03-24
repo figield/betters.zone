@@ -1,0 +1,60 @@
+{% load i18n %}
+<div class="predictions-section">
+  <div class="tournaments-box">
+    {% for t in tournaments %}
+      <div class="tournament-row">
+        <h1>
+          {{ t.name }}
+        </h1>
+        {% if t.has_tournament_ranking %}
+        <a class="button-yellow" href="{% url 'tournamentranking-id' id_t=t.id %}">{% trans "Ranking" %}</a>
+        {% endif %}
+        <span class="small-title">Organized by <span>{{ t.organizer }}</span></span>
+
+        <ul class="round-group">
+          {% if t.open_rounds %}
+            <span>Open rounds:</span>
+          {% endif %}
+          {% for r in t.open_rounds %}
+            {% if r.matches_num != 0 %}
+              <li class="round-row"><h3>{{ r.name }}</h3>
+                <div class="buttons-group">
+                  {% if r.has_ranking %}
+                  <a class="link-yellow" href="{% url 'roundranking-id' id_t=t.id id_r=r.id %}">{% trans "Ranking" %}</a>
+                  {% endif %}
+                  <a class="link-yellow" href="{% url 'predictions-id' id_t=t.id id_r=r.id %}">{% trans "Predictions" %}</a>
+                  <a class="link-yellow" href="{% url 'predictionsandstats' id_t=t.id id_r=r.id %}">{% trans "Predictions & Stats" %}</a>
+                  {% if r.matches_num == 1 %}
+                    <span>{{ r.matches_num }} match</span>
+                  {% else %}
+                     <span>{{ r.matches_num }} matches</span>
+                  {% endif %}
+                </div>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+
+        <ul class="round-group">
+          {% if t.closed_rounds %}
+            <span>Closed rounds:</span>
+          {% endif %}
+          {% for r in t.closed_rounds %}
+            {% if r.matches_num != 0 %}
+              <li class="round-row"><h3>{{ r.name }}</h3>
+                <div class="buttons-group">
+                  {% if r.has_ranking %}
+                  <a class="link-yellow" href="{% url 'roundranking-id' id_t=t.id id_r=r.id %}">{% trans "Ranking" %}</a>
+                  {% endif %}
+                  <a class="link-yellow" href="{% url 'predictions-id' id_t=t.id id_r=r.id %}">{% trans "Predictions" %}</a>
+                  <a class="link-yellow" href="{% url 'predictionsandstats' id_t=t.id id_r=r.id %}">{% trans "Predictions & Stats" %}</a>
+                </div>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+
+      </div>
+    {% endfor %}
+  </div>
+</div>

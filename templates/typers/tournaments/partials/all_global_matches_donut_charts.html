@@ -1,0 +1,10 @@
+{% load i18n %}
+{% if global_matches_charts %}
+  <p>{% trans "Statistics of all players" %}</p>
+  {% for gm in global_matches_charts %}
+    <div class="donut-chart chart">
+      <canvas id="chartjs-{{ gm.id }}"
+              style="height: 330px; width: 230px;"></canvas>
+    </div>
+  {% endfor %}
+{% endif %}

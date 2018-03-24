@@ -1,0 +1,129 @@
+{% extends "typers/tournaments/base_tournaments.html" %}
+{% load i18n %}
+
+{% block tournament_content %}
+  {% load static %}
+  <div class="form-section match-create-section match-create-form">
+    <div class="form-box">
+      <h1>{% trans "Create match in round" %} {{ round.name }} - {{ round.tournament }}.</h1>
+      <a class="button-close" href="{% url 'tournaments' %}"><i class="fa fa-close"></i></a>
+      <div class="teams-img">
+        {% with teams|first as first_team %}
+          {% if first_team.photo and first_team.photo.file and first_team.photo.file.url %}
+            <img id="team1_logo" src="{{ first_team.photo.file.url }}"/>
+          {% else %}
+            {#              TODO: move to css #}
+            <img id="team1_logo" src="{% static "assets/img/default-team-logo-500.png" %}" alt="default logo">
+          {% endif %}
+        {% endwith %}
+
+        {% with teams|last as last_team %}
+          {% if last_team.photo and last_team.photo.file and last_team.photo.file.url %}
+            <img id="team2_logo" src="{{ last_team.photo.file.url }}"/>
+          {% else %}
+            {#              TODO: move to css #}
+            <img id="team2_logo" src="{% static "assets/img/default-team-logo-500.png" %}" alt="default logo">
+          {% endif %}
+        {% endwith %}
+      </div>
+
+      <form method="post">
+        {% csrf_token %}
+        <fieldset class="two-input">
+
+          <label for="id_team1">
+            <select id="id_team1" name="team1" required>
+              {% for t in teams %}
+                {% if t.photo and t.photo.file and t.photo.file.url %}
+                  <option value="{{ t.id }}" data-src="{{ t.photo.file.url }}"> {{ t.name }}</option>
+                {% else %}
+                  <option value="{{ t.id }}" data-src=""> {{ t.name }}</option>
+                {% endif %}
+              {% endfor %}
+            </select>
+            <span class="fa fa-users" aria-hidden="true"></span>
+          </label>
+
+          <i class="fa fa-trophy"></i>
+
+          <label for="id_team2">
+            <select id="id_team2" name="team2" required>
+              {% for t2 in teams reversed %}
+                {% if t2.photo and t2.photo.file and t2.photo.file.url %}
+                  <option value="{{ t2.id }}" data-src="{{ t2.photo.file.url }}"> {{ t2.name }}</option>
+                {% else %}
+                  <option value="{{ t2.id }}" data-src=""> {{ t2.name }}</option>
+                {% endif %}
+              {% endfor %}
+            </select>
+            <span class="fa fa-users" aria-hidden="true"></span>
+          </label>
+
+        </fieldset>
+
+        <fieldset>
+          <label for="id_start_date">
+            <input id="id_start_date" type="date" name="start_date" required>
+            <span class="fa fa-calendar" aria-hidden="true"></span>
+          </label>
+        </fieldset>
+
+        <fieldset id="time-field" class=" time-info-fields">
+          <label class="time-input" for="id_start_time">
+            <input id="id_start_time" type="time" name="start_time" required>
+            <h6>{% trans "Hour" %}</h6>
+            <input id="hours" class="range-slider hours" type="range" value="12" name="" min="0" max="23"
+                   oninput="outputUpdate(value)">
+            <h6>{% trans "Minutes" %}</h6>
+            <input id="minutes" class="range-slider minutes" type="range" value="30" name="" min="0" max="59"
+                   oninput="outputUpdate(value)">
+
+            <span class="fa fa-clock-o" aria-hidden="true"></span>
+          </label>
+
+          <label for="id_info" class="textarea-label">
+            <textarea id="id_info" name="info" placeholder="Extra information..."></textarea>
+            <span class="fa fa-commenting" aria-hidden="true"></span>
+          </label>
+        </fieldset>
+
+        {% for team1_error in form.team1.errors %}
+          <div>
+            <p class="label-danger">{{ team1_error|escape }}</p>
+          </div>
+        {% endfor %}
+
+        {% for team2_error in form.team2.errors %}
+          <div>
+            <p class="label-danger">{{ team2_error|escape }}</p>
+          </div>
+        {% endfor %}
+
+        {% for start_time_error in form.start_time.errors %}
+          <div>
+            <p class="label-danger">{{ start_time_error|escape }}</p>
+          </div>
+        {% endfor %}
+
+        {% for info_error in form.info.errors %}
+          <div>
+            <p class="label-danger">{{ info_error|escape }}</p>
+          </div>
+        {% endfor %}
+
+        {% if form.errors %}
+          {% for error in form.non_field_errors %}
+            <div>
+              <p class="label-danger">{{ error|escape }}</p>
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        <button type="submit" class="button-yellow save">{% trans "Add match" %}</button>
+      </form>
+    </div>
+  </div>
+
+  {% include "typers/tournaments/partials/matches_table.html" %}
+
+{% endblock %}

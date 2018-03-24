@@ -1,0 +1,53 @@
+{% extends "typers/tournaments/base_tournaments.html" %}
+{% load i18n %}
+
+{% block tournament_content %}
+<div class="popup-background"></div>
+  <div class="popup">
+    <a href="{% url 'tournaments' %}"><i class="fa fa-close"></i></a>
+    <div class="popup-content">
+    {% if friendships_to_select %}
+      <h2>Add friend to tournament: <span class="strong">{{ tournament }}</span></h2>
+      <form class="form" method="post">
+        {% csrf_token %}
+        <div class="radio-container">
+          {% for fts in friendships_to_select %}
+            <div class="radio-box">
+              <input id="friend-{{ fts.friendship_id }}" type="checkbox" name="choices" value="{{ fts.friendship_id }}" checked="true">
+              <label for="friend-{{ fts.friendship_id }}">
+                <span>{{ fts.username }}</span>
+              </label>
+            </div>
+          {% endfor %}
+        </div>
+        <button class="button-yellow" type="submit">{% trans "Add friend" %}</button>
+      </form>
+    {% endif %}
+    <div class="tournament-friends">
+
+      {% if accepted_members_of_tournament %}
+        <div>
+          Accepted invitations:
+          <ul>
+            {% for f in accepted_members_of_tournament %}
+              <li>{{ f.username }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+
+      {% if pending_members_of_tournament %}
+        <div>
+          Pending invitations:
+          <ul>
+            {% for p in pending_members_of_tournament %}
+            <li>{{ p.username }} -  <a class="link-yellow" href="{% url 'cancel_tournament_invitation_as_organizer' membership_id=p.membership_id %}">{% trans "cancel" %}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,16 @@
+<div class="form-section" id="container-forms">
+    <div class="form-box">
+  	  <form class="form" method="POST" id="tournament-form" data-tournament-url="{% url 'create_tournament' %}">
+  	    {% csrf_token %}
+
+        <fieldset>
+          <label for="id_tournament_name">
+            <input id="id_tournament_name" placeholder="Tournament name *" maxlength="255" name="name" type="text" required>
+            <span class="fa fa-pencil" aria-hidden="true"></span>
+          </label>
+        </fieldset>
+          
+  	    <button class="button-yellow" type="submit">Create</button>
+  	  </form>
+	</div>
+</div>

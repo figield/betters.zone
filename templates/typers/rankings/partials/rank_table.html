@@ -1,0 +1,36 @@
+{% load i18n %}
+{% if ranking %}
+  <h3>{% trans "List of players" %}</h3>
+  <table class="rank-table">
+    <tbody>
+    <thead>
+    <tr>
+      <th>
+        {% trans "No." %}
+      </th>
+      <th></th>
+      <th>
+        {% trans "User Name" %}
+      </th>
+      <th>{% trans "Points" %}</th>
+    </tr>
+    </thead>
+    {% for username, points in ranking %}
+      <tr>
+        <td>
+          {{ forloop.counter }}.
+        </td>
+        <td><i class="fa fa-user"></i></td>
+        <td>
+          {{ username }}
+        </td>
+        <td>
+          {{ points }}
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  No ranking yet
+{% endif %}

@@ -1,0 +1,76 @@
+{% load i18n %}
+<div class="sidebar">
+
+  <ul class="tabs">
+    <li class="tab-link current" data-tab="tab-1">{% trans "Create Tournament" %}</li>
+    <li class="tab-link" data-tab="tab-2">{% trans "Clone Tournament" %}</li>
+  </ul>
+
+  <div id="tab-1" class="tab-content current">
+    {% include "typers/tournaments/partials/create_tournament.html" %}
+  </div>
+  <div id="tab-2" class="tab-content">
+    {% include "typers/tournaments/partials/clone_tournament.html" %}
+  </div>
+
+
+  <div id="tournaments-list">
+    {% for t in tournaments %}
+      <div class="tournament-row">
+
+        <div class="buttons-group tournament-buttons">
+
+          {% if t.show_add_round %}
+            <a class="button-yellow new-round"
+               id="new-round-{{ t.id }}"
+               title="Add Round"
+               href="#new-round"
+               data-tournament-id="{{ t.id }}"
+               data-round-url="{% url 'add_round' tournament_id=t.id %}">
+              +R
+            </a>
+          {% endif %}
+
+          <a class="button-yellow" title="Add Prize"
+             href="{% url 'add_prize_for_tournament' tournament_id=t.id %}">
+            <i class="fa fa-trophy"></i>
+          </a>
+
+          <a class="button-yellow" title="Add Friend"
+             href="{% url 'add_friends_to_tournament' tournament_id=t.id %}">
+            +<i class="fa fa-user"></i>
+          </a>
+
+          <a class="button-yellow"
+             title="Remove Tournament"
+             href="{% url 'remove_tournament' tournament_id=t.id %}">
+            <i class="fa fa-trash"></i>
+          </a>
+
+        </div>
+        <h1 class="tournament-name">{{ t.name }}</h1>
+        <ul class="round-group" id="rounds-list-{{ t.id }}">
+          {% for r in t.rounds %}
+            <li class="round-row">
+              <h3>{{ r.name }}</h3>
+              <div class="buttons-group">
+                <a class="link-yellow" href="{% url 'add_prize_for_round' id_t=t.id id_r=r.id %}">{% trans "Prizes" %}</a>
+                {% if not t.cloned %}
+                  {% if r.num > 0 %}
+                    <a class="link-yellow" href="{% url 'results' round_id=r.id %}">{% trans "Results" %}</a>
+                  {% endif %}
+                  <a class="link-yellow" href="{% url 'addmatch' round_id=r.id %}">{% trans "Matches" %}</a>
+                {% else %}
+                  {% if r.num > 0 %}
+                    <a class="link-yellow" href="{% url 'clonedresults' tournament_id=t.id round_id=r.id %}">{% trans "Results" %}</a>
+                  {% endif %}
+                {% endif %}
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
+
+  </div>
+</div>

@@ -1,0 +1,33 @@
+{% if open_tournaments %}
+  <div class="o-tournaments-section">
+    {% if request.user.username %}
+      <h1>Join Open Tournaments!</h1>
+      {% for open_tournament in open_tournaments %}
+        <div class="o-tournament">
+          <div class="o-tournament-label">
+            <span>{{ open_tournament.name }} organised by {{ open_tournament.user }}</span> <br/>
+            <span>Check the prize!</span>
+          </div>
+          <a class="button-yellow" href="{% url 'joinopentournament_id' open_tournament.id %}">
+            <i class="fa fa-trophy" aria-hidden="true"></i>Join free!</a>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h1>Register and join Open Tournaments!</h1>
+      {% for open_tournament in open_tournaments %}
+        <div class="o-tournament">
+          <div class="o-tournament-label">
+            <span>{{ open_tournament.name }} organised by {{ open_tournament.user }}</span> <br/>
+            <span>Check the prize!</span>
+          </div>
+          <a class="button-yellow"
+             href="{% url 'auth_login' %}?next={% url 'joinopentournament_id' open_tournament.id %}">
+            <i class="fa fa-key" aria-hidden="true"></i> Log in and play free!</a>
+        </div>
+      {% endfor %}
+    {% endif %}
+    <div class="o-tournament ads-block-horizontal open-tournament-ads">
+      <div class="ads-horizontal"></div>
+    </div>
+  </div>
+{% endif %}

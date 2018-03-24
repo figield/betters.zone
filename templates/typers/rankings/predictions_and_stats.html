@@ -1,0 +1,16 @@
+{% extends "typers/rankings/play_base.html" %}
+{% load i18n %}
+{% block predictions_content %}
+
+  <a href="{% url 'play' %}">{% trans "Go back" %}</a>
+  {% include "typers/rankings/partials/predictions_card.html" %}
+
+  <div class="charts-section donuts-section">
+    {% include "typers/tournaments/partials/all_global_matches_donut_charts.html" %}
+  </div>
+
+  <div class="charts-section donuts-section">
+    {% include "typers/tournaments/partials/all_local_matches_donut_charts.html" %}
+  </div>
+
+{% endblock %}

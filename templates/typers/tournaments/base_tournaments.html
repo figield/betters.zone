@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  <main class="subpage">
+    <div class="main-content organizing">
+      {% include "typers/tournaments/partials/tournaments_list.html" %}
+
+      <div class="content">
+
+        {% block tournament_content %}
+        {% endblock %}
+
+      </div>
+
+      <div class="ads-block-vertical">
+        <div class="ads-vertical"></div>
+        <div class="ads-vertical"></div>
+      </div>
+
+    </div>
+  </main>
+{% endblock %}
+
+{% block javascript %}
+  <script src="{% static 'js/ajax_django.js' %}"></script>
+  <script src="{% static 'js/tournaments.js' %}"></script>
+  {% include "typers/partials/include_charts_js.html" %}
+{% endblock %}

@@ -1,0 +1,21 @@
+<div class="podium-box">
+  <div class="podium gold-place">1</div>
+  <div class="podium silver-place">2</div>
+  <div class="podium brown-place">3</div>
+
+  {% if podium.place %}
+  <div class="label-name label-gold">{% if 1 in podium.place %}{{ podium.place.1.winners }}{% endif %}</div>
+  <div class="label-name label-silver">{% if 2 in podium.place %}{{ podium.place.2.winners }}{% endif %}</div>
+  <div class="label-name label-brown">{% if 3 in podium.place %}{{ podium.place.3.winners }}{% endif %}</div>
+  {% endif %}
+
+  <div class="rank-winner rank-gold">
+    <i class="fa fa-user"></i>
+  </div>
+  <div class="rank-winner rank-silver">
+    <i class="fa fa-user"></i>
+  </div>
+  <div class="rank-winner rank-brown">
+    <i class="fa fa-user"></i>
+  </div>
+</div>

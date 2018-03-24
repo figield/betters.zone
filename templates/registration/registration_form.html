@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+  <main class="subpage">
+    <div class="container">
+      <div class="form-box register-section">
+        <form method="post" action="">
+          {% csrf_token %}
+          <fieldset>
+            <label>                
+              <input autofocus=""
+                     id="id_username"
+                     maxlength="150"
+                     name="username"
+                     type="text"
+                     placeholder="Username"
+                     required>
+              <span class="fa fa-user" aria-hidden="true"></span>
+            </label>
+          </fieldset>
+
+          {% for username_error in form.username.errors %}
+           <fieldset class="info">
+              <label>                
+                <p class="label label-danger">{{ username_error|escape }}</p>
+                <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+              </label>
+            </fieldset>
+          {% endfor %}
+
+          <fieldset>
+            <label>
+              <input id="id_password1"
+                     name="password1"
+                     type="password"
+                     placeholder="Password"
+                     required>
+              <span class="fa fa-key" aria-hidden="true"></span>
+            </label>
+          </fieldset>
+
+          {% for password1_error in form.password1.errors %}
+            <fieldset class="info">
+              <label>                
+                <p class="label label-danger">{{ password1_error|escape }}</p>
+                <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+              </label>
+            </fieldset>
+          {% endfor %}
+
+          <fieldset>
+            <label>
+              <input id="id_password2"
+                     name="password2"
+                     type="password"
+                     placeholder="Confirm Password"
+                     required>
+              <span class="fa fa-key" aria-hidden="true"></span>
+            </label>
+          </fieldset>
+
+          {% for password2_error in form.password2.errors %}
+            <fieldset class="info">
+              <label>                
+                <p class="label label-danger">{{ password2_error|escape }}</p>
+                <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+              </label>
+            </fieldset>
+          {% endfor %}
+
+          <fieldset> 
+            <label>      
+              <input id="id_email"
+                     name="email"
+                     type="email"
+                     placeholder="Email"
+                     required>
+              <span class="fa fa-envelope" aria-hidden="true"></span> 
+            </label>
+          </fieldset>
+
+          {% for email_error in form.email.errors %}
+            <fieldset class="info">
+              <label>                
+                <p class="label label-danger">{{ email_error|escape }}</p>
+                <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+              </label>
+            </fieldset>
+          {% endfor %}
+
+          {% if form.errors %}
+            {% for error in form.non_field_errors %}
+              <fieldset class="info">
+                <label>                
+                  <p class="label label-danger">{{ error|escape }}</p>
+                  <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+                </label>
+              </fieldset>
+            {% endfor %}
+          {% endif %}
+
+          <fieldset>
+            <button class="button-yellow" type="submit">{% trans "Sign up" %}</button>
+          </fieldset>
+          <fieldset>
+            <a class="resend-mail" href="{% url 'resend_registration_email' %}"><i class="fa fa-share"></i>{% trans "Resend registration email" %}</a>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </main>
+{% endblock %}

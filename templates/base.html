@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Betters Zone</title>
+  {% load static %}
+  <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+  <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+  <link rel="stylesheet" href="{% static 'dist/main.css' %}">
+</head>
+<body>
+
+<nav class="main-nav">
+  {% include "typers/partials/menu_bar.html" %}
+</nav>
+
+{% block content %}
+{% endblock %}
+
+{% include "typers/partials/footer.html" %}
+
+<div class="loader"></div>
+<script src="{% static 'js/libs/jquery-3.2.1.min.js' %}"></script>
+{% block javascript %}
+{% endblock %}
+<script src="{% static 'dist/bundle.js' %}"></script>
+</body>
+</html>

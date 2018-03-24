@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Betters Zone</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body {
+            color: #ffd906;
+            font-family: Verdana, Arial, sans-serif;
+            font-weight: 200;
+        }
+
+        h2, h3 {
+            margin: 10px 0;
+        }
+
+        .error-code {
+            font-size: 72px;
+        }
+
+        .error-slogan {
+            font-size: 36px;
+        }
+
+        .error-info {
+            font-size: 16px;
+        }
+
+        a, a:visited, a:hover, a:active {
+            color: #ffd906;
+        }
+        .container {
+            background-color: #1c1c1c;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            justify-content: center;
+            position: relative;
+            width: 100%;
+        }
+
+        .picture{
+            background-image: url(/static/assets/img/error-pages/faul_xs.jpeg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .message {
+          background-color: rgba(0, 0, 0, 0.8);
+          top: 20vh;
+          margin: 0 auto;
+          position: absolute;
+          text-align: center;
+          width: 100%;
+        }
+
+        @media screen and (min-width: 480px) and (orientation: landscape) {
+          .picture {
+            height: 100vh;
+            background-image: url(/static/assets/img/error-pages/faul_s.jpeg);
+          }
+        }
+
+        @media screen and (max-width: 479px) and (orientation: portrait) {
+          .picture {
+            height: 100vh;
+            background-image: url(/static/assets/img/error-pages/faul_m.jpeg);
+          }
+        }
+
+        @media screen and (min-width: 480px) and (max-width: 767px) and (orientation: portrait) {
+          .picture {
+            height: 100vh;
+            background-image: url(/static/assets/img/error-pages/faul_m.jpeg);
+          }
+        }
+
+        @media screen and (min-width: 768px) {
+          .picture {
+            height: 80vh;
+            background-image: url(/static/assets/img/error-pages/faul_m.jpeg);
+          }
+        }
+
+        @media screen and (min-width: 1024px) {
+          .picture {
+            height: 80vh;
+            background-image: url(/static/assets/img/error-pages/faul_l.jpeg);
+          }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="picture">
+
+        </div>
+        <div class="message">
+            <h2 class="error-code">500</h2>
+            <h2 class="error-slogan">OOOPS... :(</h2>
+            <h3 class="error-info">We're sorry, but something went wrong</h3>
+            <h3 class="error-info"><a href="./">Take me to main page</a></h3>
+        </div>
+    </div>
+</body>
+</html>

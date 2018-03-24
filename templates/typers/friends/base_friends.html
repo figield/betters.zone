@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+  <main class="subpage friends-page">
+
+    <div class="add-friend-form">
+      <div class="container">
+        <div class="form-box">
+          <form class="form" method="post">
+            {% csrf_token %}
+
+            <fieldset>
+              <label>
+                <input id="id_username" maxlength="255" name="username" type="text" placeholder="Friend username or email" required>
+                <span class="fa fa-user" aria-hidden="true"></span>
+              </label>
+            </fieldset>
+
+            {% for name_error in form.username.errors %}
+              <fieldset class="info">
+                <label>
+                  <p class="label label-danger">{{ name_error|escape }}</p>
+                  <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+                </label>
+              </fieldset>
+            {% endfor %}
+
+            {% if form.errors %}
+              {% for error in form.non_field_errors %}
+                <fieldset class="info">
+                  <label>
+                    <p class="label label-danger">{{ error|escape }}</p>
+                    <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+                  </label>
+                </fieldset>
+              {% endfor %}
+            {% endif %}
+
+            <fieldset>
+              <button class="button-yellow" type="submit">{% trans "Add friend" %}</button>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <div class="friends-section">
+        <div class="ads-block-horizontal">
+            <div class="ads-horizontal"></div>
+        </div>
+    </div>
+
+    <div class="friends-section">
+      <div class="tournament-friends">
+        <h1> Your friends:</h1>
+          {% if user_friends %}
+            {% for user_friend in user_friends %}
+            <div class="friend-box">
+              <a class="button-yellow" href="{% url 'cancel_friendship' friendship_id=user_friend.friendship_id %}"><i class="fa fa-trash"></i></a>
+
+              <div class="user-logo"></div>
+
+              <span class="friend-name">{{ user_friend.friend_username }}</span>
+            </div>
+            {% endfor %}
+          {% else %}
+          <span>{% trans "No friends yet" %}</span>
+        {% endif %}
+      </div>
+
+      <div class="friends-notifications">
+        {% if user_notifications %}
+          {% for notification in user_notifications %}
+            <div class="notification-box">
+              <div class="user-logo"></div>
+
+              <div class="message">
+                <span class="date">{{ notification.date }}</span>
+                <span class="text">{{ notification.message }}</span>
+                <div class="notification-buttons">
+                  {% if notification.friendship_id %}
+                    {% if notification.sender %}
+                    <a class="link-yellow" href="{% url 'cancel_friendship_invitation' friendship_id=notification.friendship_id %}">{% trans "cancel" %}</a>
+                    {% else %}
+                    <a class="link-yellow" href="{% url 'accept_friendship_invitation' friendship_id=notification.friendship_id %}">{% trans "accept" %}</a>
+                      /
+                      <a class="link-yellow" href="{% url 'cancel_friendship_invitation' friendship_id=notification.friendship_id %}">{% trans "reject" %}</a>
+                    {% endif %}
+                  {% endif %}
+
+                  {% if notification.membership_id %}
+                    {% if notification.sender %}
+                    <a class="link-yellow" href="{% url 'cancel_tournament_invitation' membership_id=notification.membership_id %}">{% trans "cancel" %}</a>
+                    {% else %}
+                    <a class="link-yellow" href="{% url 'accept_tournament_invitation' membership_id=notification.membership_id %}">{% trans "accept" %}</a>
+                      /
+                      <a class="link-yellow" href="{% url 'reject_tournament_invitation' membership_id=notification.membership_id %}">{% trans "reject" %}</a>
+                    {% endif %}
+                  {% endif %}
+                </div>
+              </div>
+
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </main>
+{% endblock %}

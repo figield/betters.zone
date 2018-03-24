@@ -1,0 +1,58 @@
+{% extends "typers/teams/base_teams.html" %}
+{% load i18n %}
+
+{% block teams_content %}
+
+  <div id="container-team-forms">
+    <div class="container-forms">
+      <div class="form-box">
+        <h1>{% trans "Create team or player" %}</h1>
+
+        <form class="form" method="POST" enctype="multipart/form-data" id="team-form">
+          {% csrf_token %}
+
+          <fieldset>
+            <label for="id_name">
+              <input id="id_name" placeholder="Team / player name *"
+                     maxlength="200"
+                     name="name"
+                     type="text"
+                     value="{{ draft_name }}"
+                     required/>
+              <span class="fa fa-user" aria-hidden="true"></span>
+            </label>
+          </fieldset>
+
+          <fieldset>
+            <label for="id_photo" class="textarea-label">
+              <input id="id_photo"
+                     name="photo"
+                     type="file"/>
+              <input type="text" placeholder="Select team image" id="placeholder_input" class="upload-placeholder">
+              <span class="fa fa-upload"></span>
+              <p class="info-text">* max 42 kB</p>
+            </label>
+          </fieldset>
+
+          {% for photo_error in form.photo.errors %}
+            <p class="label-danger">{{ photo_error|escape }}</p>
+          {% endfor %}
+
+          {% if form.errors %}
+            {% for error in form.non_field_errors %}
+              <p class="label-danger">{{ error|escape }}</p>
+            {% endfor %}
+          {% endif %}
+
+          <button class="button-yellow" type="submit">{% trans "Create team" %}</button>
+        </form>
+        <div id="results">
+          {% if result %}
+            <p class="label-warning">{{ result }}</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

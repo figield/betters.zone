@@ -1,0 +1,57 @@
+{% load static %}
+{% load i18n %}
+
+{% if matches %}
+    <div class="matches-section match-create-section matches-view-card">
+        <table>
+          <thead>
+          <tr>
+            <th>{% trans "No." %}</th>
+            <th></th>
+            <th>{% trans "Team 1" %}</th>
+            <th></th>
+            <th>{% trans "Team 2" %}</th>
+            <th>{% trans "Start date" %}</th>
+            <th></th>
+            <th>{% trans "Status" %}</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for m in matches %}
+            <tr>
+              <td>
+                {{ forloop.counter }}.
+              </td>
+              <td class="team-icon"><span class="fa fa-group"></span></td>
+              <td>
+                {{ m.team1 }}
+              </td>
+              <td class="team-icon"><span class="fa fa-group"></span></td>
+              <td>
+                {{ m.team2 }}
+              </td>
+              <td>
+                {{ m.start_date | date:"H:i d/m/Y" }}
+              </td>
+              <td class="info">
+                {% if m.info %}
+                  <i class="information fa fa-question-circle" data-info="{{ m.info }}"></i>
+                {% endif %}
+              </td>
+              <td class="status">
+                {% if m.warning == 'Closed' %}
+                  <i class="fa fa-lock"></i>
+                {% elif m.warning == 'Open' %}
+                  <i class="fa fa-unlock"></i>
+                {% endif %}
+                {% if m.warning_info %}
+                  <i class="warning fa fa-exclamation-triangle"
+                     data-info="{{ m.warning_info }}"></i>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+    </div>
+  {% endif %}

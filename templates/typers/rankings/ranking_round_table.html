@@ -1,0 +1,18 @@
+{% extends "typers/rankings/base_predictions.html" %}
+{% load i18n %}
+
+{% block predictions_content %}
+  {% load static %}
+  <div class="popup-background"></div>
+  <div class="popup">
+    <a href="{% url 'play' %}"><i class="fa fa-close"></i></a>
+
+    <div class="ranking-box matches-section">
+      <h1>Best typers in round {{ round.name }} - {{ round.tournament }}</h1>
+
+      {% include "typers/rankings/partials/podium.html" %}
+      {% include "typers/rankings/partials/rank_table.html" %}
+
+    </div>
+  </div>
+{% endblock %}

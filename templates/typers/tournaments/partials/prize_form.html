@@ -1,0 +1,72 @@
+{% load i18n %}
+<form class="form" method="post">
+  {% csrf_token %}
+
+  <fieldset class="two-input">
+    <label>
+      <input id="id_prize" maxlength="255" name="name" type="text" placeholder="*Prize" required="" value="{{ prize.name }}">
+      <span class="fa fa-trophy" aria-hidden="false"></span>
+    </label>
+
+    <label>
+      <input id="id_order_number" max="100" min="1" name="order_number" type="number" placeholder="*Order No." required=""
+             value="{% if form.order_number.value %}{{ form.order_number.value }}{% else %}{{ prize.order_number }}{% endif %}">
+      <span class="fa fa-list-ol" aria-hidden="false"></span>
+    </label>
+  </fieldset>
+
+  <fieldset>
+    <label>
+      <input id="id_sponsor" maxlength="128" name="sponsor" type="text" placeholder="Prize sponsor"
+             value="{% if form.sponsor.value %}{{ form.sponsor.value }}{% else %}{{ prize.sponsor }}{% endif %}">
+      <span class="fa fa-user" aria-hidden="false"></span>
+    </label>
+  </fieldset>
+
+  <fieldset>
+    <label>
+      <textarea cols="40" id="id_info" name="info" placeholder="Short prize description and terms"
+                rows="10">{% if form.info.value %}{{ form.info.value }}{% else %}{{ prize.info }}{% endif %}</textarea>
+      <span class="fa fa-pencil" aria-hidden="false"></span>
+    </label>
+  </fieldset>
+
+  {% for name_error in form.name.errors %}
+    <fieldset class="info">
+      <label>
+        <p class="label label-danger">{% trans "Prize name is required and cannot be empty" %}</p>
+        <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+      </label>
+    </fieldset>
+  {% endfor %}
+
+  {% for sponsor_error in form.sponsor.errors %}
+    <fieldset class="info">
+      <label>
+        <p class="label label-danger">{% trans "Sponsor name cannot be longer than 128 characters" %}</p>
+        <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+      </label>
+    </fieldset>
+  {% endfor %}
+
+  {% if form.errors %}
+    {% for error in form.non_field_errors %}
+      <fieldset class="info">
+        <label>
+          <p class="label label-danger">{{ error|escape }}</p>
+          <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+        </label>
+      </fieldset>
+    {% endfor %}
+  {% endif %}
+
+  <fieldset>
+    <button class="button-yellow" type="submit">
+      {% if prize.name == "" %}
+        {% trans "Add prize" %}
+      {% else %}
+        {% trans "Update prize" %}
+      {% endif %}
+    </button>
+  </fieldset>
+</form>

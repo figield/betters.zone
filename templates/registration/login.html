@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+  <main class="subpage">
+    <div class="container">
+      <div class="form-box register-section">
+        <form class="login-form" method="post" action="">
+          {% csrf_token %}
+          <fieldset>
+            <label>
+              <input autofocus=""
+                     id="id_username"
+                     maxlength="150"
+                     name="username"
+                     type="text"
+                     placeholder="Username"
+                     required>
+              <span class="fa fa-user" aria-hidden="true"></span>
+            </label>
+          </fieldset>
+
+          {% for username_error in form.username.errors %}
+            <fieldset class="info">
+              <label>
+                <p class="label label-danger">{{ username_error|escape }}</p>
+                <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+              </label>
+            </fieldset>
+          {% endfor %}
+
+          <fieldset>
+            <label>
+              <input id="id_password"
+                     name="password"
+                     type="password"
+                     placeholder="Password"
+                     required>
+              <span class="fa fa-key" aria-hidden="true"></span>
+            </label>
+          </fieldset>
+
+          {% if form %}
+            {% if form.errors %}
+              {% for error in form.non_field_errors %}
+                <fieldset class="info">
+                  <label>
+                    <p class="label label-danger">{{ error|escape }}</p>
+                    <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+                  </label>
+                </fieldset>
+              {% endfor %}
+            {% endif %}
+          {% endif %}
+          <fieldset>
+            <button class="button-yellow" type="submit">{% trans "Log in" %}</button>
+          </fieldset>
+          <fieldset>
+            <a href="{% url 'auth_password_reset' %}"><i class="fa fa-frown-o" aria-hidden="true"></i>{% trans "Forgot password" %}</a>
+          </fieldset>
+          <fieldset>
+            <a href="{% url 'registration_register' %}"><i class="fa fa-user-o" aria-hidden="true"></i>{% trans "Register" %}</a>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </main>
+{% endblock %}

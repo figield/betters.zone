@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+  <main class="subpage">
+    <div class="main-content organizing">
+
+      <div class="sidebar">
+        <ul class="tabs">
+          <li class="tab-link current" data-tab="tab-1">{% trans "Closest" %}</li>
+          <li class="tab-link" data-tab="tab-2">{% trans "New" %}</li>
+          <li class="tab-link" data-tab="tab-3">{% trans "Popular" %}</li>
+          <li class="tab-link" data-tab="tab-4">{% trans "Yours" %}</li>
+        </ul>
+
+        <div id="tab-1" class="tab-content current">
+          <div class="game-box ads-block-vertical">
+              <div class="ads-vertical"></div>
+          </div>
+          {% include "typers/rankings/partials/current_round_box.html" %}
+        </div>
+        <div id="tab-2" class="tab-content">
+          {% include "typers/rankings/partials/current_round_box.html" %}
+        </div>
+        <div id="tab-3" class="tab-content">
+          {% include "typers/rankings/partials/current_round_box.html" %}
+        </div>
+
+      </div>
+
+      <div class="content">
+
+        {% block predictions_content %}
+        {% endblock %}
+
+      </div>
+
+      <div class="ads-block-vertical">
+          <div class="ads-vertical"></div>
+          <div class="ads-vertical"></div>
+      </div>
+
+    </div>
+  </main>
+{% endblock %}
+
+{% block javascript %}
+  {% include "typers/partials/include_charts_js.html" %}
+{% endblock %}
+
+
+
+
+
+
+

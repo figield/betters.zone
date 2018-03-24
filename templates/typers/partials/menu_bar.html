@@ -1,0 +1,54 @@
+{% load i18n %}
+
+  <div class="mobile-menu">
+
+    <div class="mobile-login">
+      <input type="checkbox" id="menu-login">
+      <label for="menu-login"><span class="fa fa-user"></span></label>
+    </div>
+
+    <div class="x">
+      <input type="checkbox" id="menu-x"/>
+      <label for="menu-x"><span class="fa fa-bars"></span></label>
+    </div>
+  </div>
+
+  <a class="logo" href="/">b<span class="logo-half">z</span></a>
+  <a class="logo_full" href="/">betters <span class="logo-highlight">zone</span></a>
+
+  <div class="main-login-form">
+    <div id="main-login-form" class="login-form-box mobile-hidden">
+      {% if request.user.username %}
+        <a href=""><i class="fa fa-user" aria-hidden="true"></i>Hello {{ request.user.username }}!</a>
+        <a class="three-d" href="{% url 'site-logout' %}?next=/"><i class="fa fa-sign-out" aria-hidden="true"></i>{% trans "Logout" %}</a>
+      {% else %}
+      <a href="{% url 'auth_login' %}?next=/"><i class="fa fa-key" aria-hidden="true"></i>{% trans "Log in" %}</a>
+      <a href="{% url 'registration_register' %}"><i class="fa fa-user-o" aria-hidden="true"></i>{% trans "Register" %}</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="main-nav-links">
+
+    <nav id="main-nav-links" class="nav-box mobile-hidden">
+      {% load cache %}
+      {% cache 5 user_menu request.user.username %}
+        {% if request.user.username %}
+        <a class="nav-link-home" href="/"><i class="fa fa-home" aria-hidden="true"></i>{% trans "Home" %}</a>
+        <a href="{% url 'play' %}"><i class="fa fa-trophy" aria-hidden="true"></i>{% trans "Play" %}</a>
+          {% if request.user.profile.is_organizer %}
+          <a href="{% url 'tournaments' %}"><i class="fa fa-futbol-o" aria-hidden="true"></i>{% trans "Tournaments" %}</a>
+          <a href="{% url 'teams' %}"><i class="fa fa-users" aria-hidden="true"></i>{% trans "Teams" %}</a>
+          {% endif %}
+
+          {% if request.user.profile.has_notification %}
+            <a class="notification" href="{% url 'friends' %}"><i class="fa fa-envelope" aria-hidden="true"></i>{% trans "Friends" %}</a>
+          {% else %}
+            <a href="{% url 'friends' %}"><i class="fa fa-handshake-o" aria-hidden="true"></i>{% trans "Friends" %}</a>
+          {% endif %}
+        {% endif %}
+      {% endcache %}
+        <a href="http://news.betters.zone" target="_blank"><i class="fa fa-newspaper-o" aria-hidden="true"></i>{% trans "News" %}</a>
+        <a href="/"><i class="fa fa-comments-o" aria-hidden="true"></i>{% trans "Forum" %}</a>
+    </nav>
+  </div>

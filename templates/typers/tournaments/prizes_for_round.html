@@ -1,0 +1,66 @@
+{% extends "typers/tournaments/base_tournaments.html" %}
+{% load i18n %}
+
+{% block tournament_content %}
+  {% load static %}
+  <div class="form-section add-prize-section">
+    <div class="form-box">
+      <h2>Add prize to tournament: <span class="strong">{{ tournament }}</span> round: <span
+          class="strong">{{ round }}</span></h2>
+      <a href="{% url 'tournaments' %}"><i class="fa fa-close"></i></a>
+
+      {% include "typers/tournaments/partials/prize_form.html" %}
+
+      {% if prize.name != "" %}
+        <p>
+          <a class="link-yellow"
+             href="{% url 'add_prize_for_round' id_t=tournament_id id_r=round_id %}">{% trans "Add new prize" %}</a>
+        </p>
+      {% endif %}
+
+      {% if result == "new_prize" %}
+        <p>{% trans "Successfully added a new prize to round" %}</p>
+      {% elif result == "already_exist" %}
+        <p>{% trans "Your already have such prize for this round" %}</p>
+      {% elif result == "updated" %}
+        <p>{% trans "Successfully updated the round prize" %}</p>
+      {% elif result == "invalid_value" %}
+        <p>{% trans "Invalid value" %}</p>
+      {% else %}
+        <p></p>
+      {% endif %}
+
+      <div class="prizes-list">
+        <table>
+          <thead>
+          <tr>
+            <th>{% trans "Order" %}</th>
+            <th></th>
+            <th>{% trans "Prize" %}</th>
+            <th>{% trans "Sponsor" %}</th>
+            <th>{% trans "Prize description and terms" %}</th>
+            <th></th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for prize in prizes %}
+            <tr>
+              <td>{{ prize.order_number }}</td>
+              <td class="team-icon"><span class="fa fa-trophy"></span></td>
+              <td>{{ prize.name | truncatechars:40 }}</td>
+              <td>{{ prize.sponsor | truncatechars:40  }}</td>
+              <td>{{ prize.info | truncatechars:40  }}</td>
+              <td><a class="link-yellow" href="{% url 'edit_prize_for_round' id_p=prize.id %}">{% trans "Edit" %}</a>
+              </td>
+              <td><a class="link-yellow"
+                     href="{% url 'delete_prize_for_round' id_p=prize.id %}">{% trans "Delete" %}</a></td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% load static %}
+    <main class="subpage">
+        <div class="main-content organizing">
+            {% include "typers/teams/partials/teams_list.html" %}
+            <div class="content" id="menu">
+
+                {% block teams_content %}
+                {% endblock %}
+
+            </div>
+        </div>
+    </main>
+{% endblock %}
+{% block javascript %}
+    <script src="{% static 'js/teams.js' %}"></script>
+{% endblock %}

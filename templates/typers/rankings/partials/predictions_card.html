@@ -1,0 +1,96 @@
+{% load i18n %}
+<div class="matches-section predictions-card">
+  <h1>{{ round.tournament }} - {% trans "round" %} {{ round.name }}</h1>
+
+  {% if predictions %}
+    <form class="form" method="post">
+      {% csrf_token %}
+      <table>
+        <thead>
+        <tr>
+          <th>{% trans "No." %}</th>
+          <th></th>
+          <th>{% trans "Team 1" %}</th>
+          <th>{% trans "Type" %}</th>
+          <th>{% trans "Result" %}</th>
+          <th></th>
+          <th>{% trans "Team 2" %}</th>
+          <th>{% trans "Start date" %}</th>
+
+          {% if any_points %}
+            <th>{% trans "Points" %}</th>
+            <th>{% trans "1" %}</th>
+            <th>{% trans "2" %}</th>
+            <th>{% trans "T" %}</th>
+            <th>{% trans "R" %}</th>
+          {% else %}
+            <th colspan="5">{% trans "Status" %}</th>
+          {% endif %}
+
+        </tr>
+        </thead>
+        <tbody>
+        <span id="tooltip" class="tooltip"></span>
+        {% for p in predictions %}
+          <tr>
+            <td>
+              {{ forloop.counter }}.
+            </td>
+            <td class="team-icon"><span class="fa fa-group"></span></td>
+            <td>
+              {{ p.team1 }}
+            </td>
+            <td class="nowrap">
+              {% if p.disabled %}
+                {% if p.prediction1 != '-' and p.prediction2 != '-' %}
+                  <b>{{ p.prediction1 }} : {{ p.prediction2 }}</b>
+                {% else %}
+                  <span class="fa fa-lock information" data-info="Too late :("></span>
+                {% endif %}
+              {% else %}
+                <input name="p1-{{ p.id }}" placeholder="?" value="{{ p.prediction1 }}">
+              {% endif %}
+            </td>
+            <td class="nowrap">
+              {% if p.disabled %}
+                <small> {{ p.result1 }} : {{ p.result2 }}</small>
+              {% else %}
+                <input name="p2-{{ p.id }}" placeholder="?" value="{{ p.prediction2 }}">
+              {% endif %}
+            </td>
+            <td class="team-icon"><span class="fa fa-group"></span></td>
+            <td>
+              {{ p.team2 }}
+            </td>
+            <td>
+              <label class=""> {{ p.start_date | date:"H:i d/m/Y" }} </label>
+            </td>
+            <td>
+              <label class=""> {{ p.info }} </label>
+            </td>
+            {% if any_points %}
+              <td>
+                {{ p.correct1 }}
+              </td>
+              <td>
+                {{ p.correct2 }}
+              </td>
+              <td>
+                {{ p.correct_type }}
+              </td>
+              <td>
+                {{ p.correct_result }}
+              </td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      {% if show_save_button %}
+        <button type="submit" class="button-yellow save">{% trans "Save your predictions" %}</button>
+      {% endif %}
+    </form>
+  {% endif %}
+</div>
+
+

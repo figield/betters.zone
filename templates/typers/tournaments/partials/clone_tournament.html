@@ -1,0 +1,28 @@
+<div class="container-forms" id="container-clone-forms">
+  <div class="form-box">
+    <form class="form" method="POST" id="clone-tournament-form" data-tournament-url="{% url 'clone_tournament' %}">
+      {% csrf_token %}
+
+      <fieldset>
+        <label for="id_clone_name">
+          <select id="id_clone_name" name="tournament" required>
+            <option value="">Select tournament name *</option>
+            {% for id, name in tournaments_choices %}
+              <option value="{{ id }}">{{ name }}</option>
+            {% endfor %}
+          </select>
+          <span class="fa fa-pencil" aria-hidden="true"></span>
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <label for="id_tournament_name">
+          <input id="id_your_tournament_name" placeholder="Your tournament name" maxlength="255" name="name" type="text">
+          <span class="fa fa-pencil" aria-hidden="true"></span>
+        </label>
+      </fieldset>
+
+      <button class="button-yellow" type="submit">Clone</button>
+    </form>
+  </div>
+</div>

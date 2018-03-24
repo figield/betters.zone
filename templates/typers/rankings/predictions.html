@@ -1,0 +1,9 @@
+{% extends "typers/rankings/base_predictions.html" %}
+
+{% block predictions_content %}
+  <div class="popup-background"></div>
+  <div class="popup">
+    <a href="{% url 'play' %}"><i class="fa fa-close"></i></a>
+    {% include "typers/rankings/partials/predictions_card.html" %}
+  </div>
+{% endblock %}

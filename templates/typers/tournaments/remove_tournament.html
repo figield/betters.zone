@@ -1,0 +1,19 @@
+{% extends "typers/tournaments/base_tournaments.html" %}
+{% load i18n %}
+
+{% block tournament_content %}
+<div class="popup-background"></div>
+<div class="popup">
+  <a href="{% url 'tournaments' %}"><i class="fa fa-close"></i></a>
+  <div class="popup-content">
+    {% if cloned %}
+      <p>Tournament <b>'{{ tournament }}'</b> is cloned, removing it will result in permanent deleting your invitations and
+      related bets.</p>
+    {% else %}
+      <p>Tournament <b>'{{ tournament }}'</b> and related to it rounds, matches, bets and invitations will be permanently
+      removed.</p>
+    {% endif %}
+    <a class="button-yellow save" href="{% url 'remove_tournament_accept' tournament_id=tournament_id %}"> <i class="fa fa-trash"></i> {% trans "Remove" %}</a>
+  </div>
+</div>
+{% endblock %}

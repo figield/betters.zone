@@ -1,0 +1,5 @@
+{% if matches_charts %}
+  {% for m in matches_charts %}
+    <div class="donut-chart chart"><canvas id="chartjs-{{ m.id }}"></canvas></div>
+  {% endfor %}
+{% endif %}

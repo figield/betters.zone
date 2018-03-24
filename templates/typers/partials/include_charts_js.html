@@ -1,0 +1,14 @@
+{% load static %}
+{% if matches_charts %}
+  <script src="{% static 'js/libs/Chart.min.js' %}"></script>
+  <script src="{% static 'js/libs/Chart.PieceLabel.min.js' %}"></script>
+  <script src="{% static 'js/charts/match_chartjs_org.js' %}"></script>
+  <script>
+      $(document).ready(function (e) {
+          matches_donut_chartsjs({{ global_matches_charts | safe }});
+      });
+      $(document).ready(function (e) {
+          matches_donut_chartsjs({{ local_matches_charts | safe }});
+      });
+  </script>
+{% endif %}

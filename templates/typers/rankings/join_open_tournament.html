@@ -1,0 +1,29 @@
+{% extends "typers/rankings/base_predictions.html" %}
+{% load i18n %}
+
+{% block predictions_content %}
+  <div class="popup-background"></div>
+  <div class="popup">
+    <a href="{% url 'play' %}"><i class="fa fa-close"></i></a>
+    <div class="info-popup">
+      <h1>{{ tournament_name }}</h1>
+      <p>    
+        You agree to accept terms and conditions of our service, if not, go to hell !!!
+        <span>(Currently we don't have terms, so just be nice to others)</span>
+      </p>
+      <form class="form" method="post" action="{% url 'tournamentacceptterms-id' id_t=tournament_id %}">
+        {% csrf_token %}
+        <div class="radio-container">
+            <div class="radio-box">
+              <input id="termsaccept" type="checkbox" name="termsaccept" value="accept">
+              <label for="termsaccept">
+                <span>{% trans "Accept" %}</span>
+              </label>
+            </div>
+        </div>
+        <button class="button-yellow" type="submit" disabled="true">{% trans "Accept" %}</button>
+      </form>
+      <a class="link-yellow decline-link" href="{% url 'play' %}">{% trans "Decline" %}</a>
+    </div>
+  </div>
+{% endblock %}
